@@ -1,0 +1,18 @@
+import java.util.Scanner; // Import Scanner from java.util
+
+public class EvenNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Create Scanner object
+        
+        System.out.print("Enter the upper limit: ");
+        int limit = scanner.nextInt(); // Read user input for upper limit
+        
+        System.out.println("Even numbers up to " + limit + ":");
+        
+        for (int i = 2; i <= limit; i += 2) {
+            System.out.print(i + " ");
+        }
+        
+        scanner.close(); // Close the scanner
+    }
+}
