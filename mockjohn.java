@@ -1,11 +1,12 @@
-import java.util.Scanner; // Import Scanner from java.util
+import java.util.Scanner;
 
+//mock code print even numbers
 public class EvenNumbers {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // Create Scanner object
+        Scanner scanner = new Scanner(System.in);
         
         System.out.print("Enter the upper limit: ");
-        int limit = scanner.nextInt(); // Read user input for upper limit
+        int limit = scanner.nextInt();
         
         System.out.println("Even numbers up to " + limit + ":");
         
@@ -13,6 +14,6 @@ public class EvenNumbers {
             System.out.print(i + " ");
         }
         
-        scanner.close(); // Close the scanner
+        scanner.close();
     }
 }
