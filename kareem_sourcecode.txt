@@ -1,0 +1,49 @@
+//Kareem Omran
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Push Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        code {
+            background: #222;
+            color: #f8f8f2;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Push a Repository to GitHub</h1>
+    <p>Follow these steps to push your local repository to GitHub:</p>
+
+    <h2>1. Initialize Git</h2>
+    <code>git init</code>
+
+    <h2>2. Add Files</h2>
+    <code>git add .</code>
+
+    <h2>3. Commit Changes</h2>
+    <code>git commit -m "Initial commit"</code>
+
+    <h2>4. Add Remote Repository</h2>
+    <code>git remote add origin https://github.com/your-username/your-repository.git</code>
+
+    <h2>5. Push to GitHub</h2>
+    <code>git push -u origin main</code>
+
+    <p>Replace <strong>your-username</strong> and <strong>your-repository</strong> with your actual GitHub details.</p>
+</body>
+</html>
