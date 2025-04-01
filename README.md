@@ -21,3 +21,11 @@ Frontend:
 cd client
 npm start
 ```
+
+
+## 🚀 Backend Setup
+
+```bash
+cd server
+node index.js
+```
