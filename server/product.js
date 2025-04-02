@@ -41,7 +41,7 @@ function addProduct(Name, Price, Quantity) {
   }
   
   //Tests if Quantity is a whole number, if not then sends a message
-  if (!Number.isInteger(Quantity) || Quantity === null) {
+  if (!Number.isInteger(Quantity) || Quantity === null || Quantity < 0) {
     console.log('Please enter a valid quantity for your product.');
     return 'Please enter a valid quantity for your product.';
   }
@@ -54,8 +54,8 @@ function addProduct(Name, Price, Quantity) {
 //Searches for products by keyword in the name
 function productSearch(keyword) {
   if (keyword === "" || keyword === " " || keyword === null) {
-    console.log('Please enter a valid keyword.');
-    return 'Please enter a valid keyword.';
+    console.log('Invalid Search Query, Please Try Again');
+    return 'Invalid Search Query, Please Try Again';
   }
   
   const results = productList.filter(product => 
@@ -64,11 +64,10 @@ function productSearch(keyword) {
 
   if (results.length > 0) {
     let message = 'Products found:\n';
-    console.log('Products found:');
     results.forEach(product => {
       const productInfo = `${product.getName()} - $${product.getPrice()}\n`;
-      console.log(`${product.getName()} - $${product.getPrice()}`);
       message += productInfo;
+      console.log(message);
     });
     return message;
   } else {
@@ -76,3 +75,41 @@ function productSearch(keyword) {
     return 'No products match your search.';
   }
 }
+
+//tests if the actual equals the expected
+function assertEquals(actual, expected) {
+  if (actual === expected) {
+    console.log('Passed!');
+  } else {
+    console.log('Failed!');
+  }
+}
+
+function runTests() {
+    //addProduct Test Cases
+    //All 3 variables are valid
+    assertEquals(addProduct('Chair', 40, 50), 'Success!');
+    //Quantity is a string
+    assertEquals(addProduct('Chair', 40, 'fifty'), 'Please enter a valid quantity for your product.');
+    //Quantity is negative
+    assertEquals(addProduct('Chair', 40, -50), 'Please enter a valid quantity for your product.');
+    //Price is a string
+    assertEquals(addProduct('Chair', 'Fourty', 50), 'Please enter a valid price for your product.');
+    //Price is negative
+    assertEquals(addProduct('Chair', -40, 50), 'Please enter a valid price for your product.');
+    //Name is a space
+    assertEquals(addProduct(' ', 40, 50), 'Please enter a valid name for your product.');
+    //Name is null
+    assertEquals(addProduct(null, 40, 50), 'Please enter a valid name for your product.');
+
+    
+    //searchProduct Test Cases
+    //Valid search query
+    addProduct("Dog Toy", 10, 30);
+    assertEquals(productSearch('Dog Toy'), 'Products found:\nDog Toy - $10\n');
+    //Search query does not exist
+    assertEquals(productSearch('asdf'), 'No products match your search.');
+    //Search for an empty string
+    assertEquals(productSearch(''), 'Invalid Search Query, Please Try Again');
+}
+runTests();
