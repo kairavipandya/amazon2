@@ -54,18 +54,23 @@ function addProduct(Name, Price, Quantity) {
 //Searches for products by keyword in the name
 function productSearch(keyword) {
   if (keyword === "" || keyword === " " || keyword === null) {
-      console.log('Please enter a valid keyword.');
-      return 'Please enter a valid keyword.';
+    console.log('Please enter a valid keyword.');
+    return 'Please enter a valid keyword.';
   }
+  
   const results = productList.filter(product => 
     product.getName().toLowerCase().includes(keyword.toLowerCase())
   );
 
   if (results.length > 0) {
+    let message = 'Products found:\n';
     console.log('Products found:');
     results.forEach(product => {
+      const productInfo = `${product.getName()} - $${product.getPrice()}\n`;
       console.log(`${product.getName()} - $${product.getPrice()}`);
+      message += productInfo;
     });
+    return message;
   } else {
     console.log('No products match your search.');
     return 'No products match your search.';
