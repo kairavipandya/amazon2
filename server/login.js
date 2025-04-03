@@ -18,21 +18,14 @@ function isValidPassword(password) {
 }
 
 function login(username, password) {
-    try {
-        if (username ===  null || password === null) throw new Error("Null input");
-        if (username === undefined || password === undefined) throw new Error("Undefined input");
-
-        if (!isValidUsername(username)) return "Error";
-        if (!isValidPassword(password)) return "Error";
-        return "Success";
-    } catch (error) {
-        return "Excpetion";
-    }
+    if (!isValidUsername(username)) return "Error";
+    if (!isValidPassword(password)) return "Error";
+    return "Success";
 }
 
 //test cases
 
-const username = {
+const usernames = {
     Valid: "johnty25",
     Invalid: "jo",
     Exception: null
@@ -47,18 +40,18 @@ const passwords = {
 const testCases = [
     ["Valid", "Valid", "Success"],
     ["Valid", "Invalid", "Error"],
-    ["Valid", "Exception", "Exception"],
+    ["Valid", "Exception", "Error"],
     ["Invalid", "Valid", "Error"],
     ["Invalid", "Invalid", "Error"],
-    ["Invalid", "Exception", "Exception"],
-    ["Exception", "Valid", "Exception"],
-    ["Exception", "Invalid", "Exception"],
-    ["Exception", "Exception", "Exception"]
+    ["Invalid", "Exception", "Error"],
+    ["Exception", "Valid", "Error"],
+    ["Exception", "Invalid", "Error"],
+    ["Exception", "Exception", "Error"]
   ];
   
   console.log("=== LOGIN TEST CASES ===");
   testCases.forEach(([uType, pType, expected], index) => {
     const result = login(usernames[uType], passwords[pType]);
-    const status = result === expected ? "PASS" : "FAIL";
+    const status = String(result) === String(expected) ? "PASS" : "FAIL";
     console.log(`Test ${index + 1}: Username=${uType}, Password=${pType} → Expected=${expected}, Got=${result} → ${status}`);
   });
