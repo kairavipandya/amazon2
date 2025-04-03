@@ -20,3 +20,21 @@ function logout(logoutClicked, confirmationClicked) {
 
     return "Unknown";
 }
+
+//test cases
+
+const testCases = [
+    ["Valid", "Valid", "Logout confirmation page"],     
+    ["Valid", "Invalid", "Profile Dashboard page"],     
+    ["Invalid", "Valid", "Error Message"],              
+    ["Invalid", "Invalid", "Error Message"],            
+    ["Valid", "Exception", "Error Message"],            
+    ["Invalid", "Exception", "Error Message"]           
+  ];
+  
+  console.log("=== LOGOUT TEST CASES ===");
+  testCases.forEach(([logoutBtn, confirmBtn, expected], index) => {
+    const result = logout(logoutBtn, confirmBtn);
+    const status = String(result) === String(expected) ? "PASS" : "FAIL";
+    console.log(`Test ${index + 1}: Logout=${logoutBtn}, Confirm=${confirmBtn} → Expected=${expected}, Got=${result} → ${status}`);
+  });
