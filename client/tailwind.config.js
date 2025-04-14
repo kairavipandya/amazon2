@@ -1,19 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
-//"#F2EAE0"
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    './app/**/*.{js,ts,jsx,tsx}',
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        white: '#FFFFFF',
-        black: '#000000',
-        primary: red,
+        primary: "#F2EAE0",
         secondary: "#851717",
       },
       fontFamily: {

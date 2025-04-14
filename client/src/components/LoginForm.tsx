@@ -1,60 +1,57 @@
 "use client";
 import { useState } from "react";
-import { FiMail, FiLock } from "react-icons/fi";
-import { AiOutlineEye } from "react-icons/ai";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-primary font-sans">
-      <div className="bg-white p-10 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-1 text-black text-center">Amazon2</h1>
-        <div className="text-center mt-5">
-          <h2 className="text-2xl font-semibold text-black">Welcome Back!</h2>
-          <p className="text-sm text-gray-700 mt-1">
-            Don’t have an account?{" "}
-            <a href="/signup" className="text-secondary font-medium hover:underline">
-              Sign up now!
-            </a>
-          </p>
-        </div>
-        <div className="mt-6 relative">
-          <FiMail className="absolute left-3 top-3.5 text-black" />
+    <div className="min-h-screen flex items-center justify-center bg-primary font-sans px-4">
+
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+
+        <h1 className="text-3xl font-bold text-center text-black">Amazon2</h1>
+        <p className="text-center text-gray-600 mt-1 text-sm">
+          Don’t have an account?{" "}
+          <a href="#" className="text-secondary font-semibold hover:underline">
+            Sign up now!
+          </a>
+        </p>
+
+        <div className="mt-6">
+          <label className="block text-sm text-gray-700 mb-1">Email</label>
           <input
             type="email"
-            className="w-full pl-10 pr-3 py-2 border rounded-full outline-none"
-            placeholder="johndoe@gmail.com"
+            placeholder="you@example.com"
+            className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-secondary"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="mt-4 relative">
-          <FiLock className="absolute left-3 top-3.5 text-black" />
+
+        <div className="mt-4">
+          <label className="block text-sm text-gray-700 mb-1">Password</label>
           <input
             type="password"
-            className="w-full pl-10 pr-10 py-2 border rounded-full outline-none"
-            placeholder="********"
+            placeholder="••••••••"
+            className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-secondary"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <AiOutlineEye className="absolute right-3 top-3.5 text-black cursor-pointer" />
         </div>
-        <div className="flex justify-between items-center mt-3">
-          <label className="flex items-center text-sm">
-            <input type="checkbox" className="mr-1" />
+
+        <div className="flex justify-between items-center mt-4 text-sm">
+          <label className="flex items-center">
+            <input type="checkbox" className="mr-2" />
             Remember me
           </label>
-          <a href="#" className="text-sm text-secondary hover:underline">
+          <a href="#" className="text-secondary hover:underline">
             Forgot password?
           </a>
         </div>
-        <button
-          type="submit"
-          className="bg-secondary text-white w-full py-2 mt-6 rounded-full hover:opacity-90 transition"
-        >
-          Submit
+
+        <button className="mt-6 bg-secondary text-white w-full py-2 rounded-full hover:opacity-90 transition">
+          Sign In
         </button>
       </div>
     </div>
