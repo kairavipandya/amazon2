@@ -4,8 +4,10 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Navbar from "../../components/NavBar";
 import { FavoriteBorder, Favorite, AddShoppingCart } from "@mui/icons-material";
+import { useCart } from "@/context/CartContext";
 
 export default function SearchPage() {
+  const { addToCart } = useCart(); // ✅ Move it here!
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "Easter Decorations";
 
@@ -17,7 +19,6 @@ export default function SearchPage() {
     image: "/eastergarland.svg",
   });
 
-  const [cartCount, setCartCount] = useState(0);
   const [liked, setLiked] = useState(Array(items.length).fill(false));
 
   const handleLike = (index: number) => {
@@ -26,41 +27,33 @@ export default function SearchPage() {
     setLiked(updatedLikes);
   };
 
-  const handleAddToCart = () => {
-    setCartCount((prev) => prev + 1);
-  };
-
   return (
     <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 mt-6">
         {/* Filters */}
-<div className="relative flex flex-wrap gap-3 mt-4">
-  {/* All Filters with dropdown */}
-  <div className="relative group">
-    <button className="flex items-center gap-2 border px-4 py-1 rounded-full bg-white hover:bg-gray-100">
-      <span className="material-icons text-sm">tune</span>
-      All Filters
-    </button>
+        <div className="relative flex flex-wrap gap-3 mt-4">
+          <div className="relative group">
+            <button className="flex items-center gap-2 border px-4 py-1 rounded-full bg-white hover:bg-gray-100">
+              <span className="material-icons text-sm">tune</span>
+              All Filters
+            </button>
 
-    {/* Dropdown on hover */}
-    <div className="absolute z-10 left-0 mt-2 hidden group-hover:block bg-white rounded-lg shadow-lg p-3 min-w-[180px]">
-      <p className="text-sm hover:bg-gray-100 p-2 rounded">Price: Low to High</p>
-      <p className="text-sm hover:bg-gray-100 p-2 rounded">Price: High to Low</p>
-      <p className="text-sm hover:bg-gray-100 p-2 rounded">Customer Rating</p>
-      <p className="text-sm hover:bg-gray-100 p-2 rounded">New Arrivals</p>
-    </div>
-  </div>
+            <div className="absolute z-10 left-0 mt-2 hidden group-hover:block bg-white rounded-lg shadow-lg p-3 min-w-[180px]">
+              <p className="text-sm hover:bg-gray-100 p-2 rounded">Price: Low to High</p>
+              <p className="text-sm hover:bg-gray-100 p-2 rounded">Price: High to Low</p>
+              <p className="text-sm hover:bg-gray-100 p-2 rounded">Customer Rating</p>
+              <p className="text-sm hover:bg-gray-100 p-2 rounded">New Arrivals</p>
+            </div>
+          </div>
 
-  {/* Static category filters */}
-  {["Bunny", "Blue", "Pastel", "Outdoor", "Rustic"].map((filter, i) => (
-    <button key={i} className="border px-4 py-1 rounded-full bg-white hover:bg-gray-100">
-      {filter}
-    </button>
-  ))}
-</div>
-
+          {filters.slice(1).map((filter, i) => (
+            <button key={i} className="border px-4 py-1 rounded-full bg-white hover:bg-gray-100">
+              {filter}
+            </button>
+          ))}
+        </div>
 
         {/* Products */}
         <h2 className="text-xl font-semibold mt-8 mb-4">A2 Picks</h2>
@@ -74,7 +67,8 @@ export default function SearchPage() {
                 height={250}
                 className="w-full h-36 md:h-40 object-cover rounded-lg"
               />
-              {/* Heart button */}
+
+              {/* Like button */}
               <button
                 onClick={() => handleLike(i)}
                 className="absolute top-2 right-2 bg-white p-1 rounded-full"
@@ -94,9 +88,12 @@ export default function SearchPage() {
                 </span>
               </div>
 
-              {/* Add to cart button */}
-              <button onClick={handleAddToCart}>
-                <AddShoppingCart className="absolute bottom-2 right-2 text-gray-600 hover:text-black cursor-pointer" />
+              {/* Cart icon */}
+              <button
+                onClick={() => addToCart(item)}
+                className="absolute bottom-2 right-2 text-gray-600 hover:text-black cursor-pointer"
+              >
+                <AddShoppingCart />
               </button>
             </div>
           ))}

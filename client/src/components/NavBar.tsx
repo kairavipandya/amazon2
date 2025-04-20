@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
-import SearchBar from "./SearchBar";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
-  const [cartCount, setCartCount] = useState(1); // test number
+  const { cart } = useCart();
+  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav className="bg-[#F2EAE0] px-6 py-3 flex items-center justify-between font-sans">
@@ -53,17 +54,17 @@ export default function Navbar() {
       {/* Center: Search */}
       <SearchBar />
 
-      {/* Right: Icons + Sign In */}
+      {/* Right: Icons */}
       <div className="flex items-center gap-4 text-[#851717]">
         {/* Cart */}
-        <div className="relative">
+        <Link href="/cart" className="relative">
           <ShoppingCartIcon fontSize="medium" className="cursor-pointer" />
           {cartCount > 0 && (
             <span className="absolute -top-2 -right-2 text-xs bg-white text-[#851717] rounded-full px-1.5 py-0.5 font-bold">
               {cartCount}
             </span>
           )}
-        </div>
+        </Link>
 
         {/* Settings */}
         <SettingsIcon fontSize="medium" className="cursor-pointer" />
