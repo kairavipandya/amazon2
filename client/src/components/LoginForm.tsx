@@ -87,6 +87,12 @@ export default function LoginForm() {
           className="mt-6 bg-secondary text-white w-full py-2 rounded-full hover:opacity-90 transition">
           Sign In
         </button>
+
+        {error && (
+          <div className="text-red-600 text-base mt-4 font-medium text-center">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
