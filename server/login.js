@@ -23,6 +23,7 @@ function login(username, password) {
     return "Success";
 }
 
+module.exports = { login };
 //test cases
 
 const usernames = {
