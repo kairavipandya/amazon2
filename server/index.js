@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { logout } = require("./logout");
 const { login } = require("./login");
+const { addProduct, productSearch } = require("./product");
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,17 @@ app.post("/api/logout", (req, res) => {
   res.json({ message: result });
 });
 
+app.post("/api/add-product", (req, res) => {
+  const { name, price, quantity } = req.body;
+  const result = addProduct(name, price, quantity);
+  res.json({ message: result });
+});
+
+app.get("/api/search-product", (req, res) => {
+  const { keyword } = req.query;
+  const result = productSearch(keyword);
+  res.json({ message: result });
+});
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

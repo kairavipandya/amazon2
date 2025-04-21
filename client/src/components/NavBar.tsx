@@ -37,7 +37,7 @@ export default function Navbar() {
             <MenuIcon fontSize="small" />
             Categories
           </button>
-          <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
+          <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
             <ul className="text-sm text-black p-2 space-y-1">
               {[
                 "Electronics",
