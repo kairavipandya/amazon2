@@ -1,3 +1,4 @@
+require('./db');
 const express = require("express");
 const cors = require("cors");
 const { logout } = require("./logout");
@@ -30,6 +31,7 @@ app.post("/api/logout", (req, res) => {
 });
 
 app.post("/api/add-product", (req, res) => {
+  console.log("✅ Add product hit:", req.body);
   const { name, price, quantity } = req.body;
   const result = addProduct(name, price, quantity);
   res.json({ message: result });
