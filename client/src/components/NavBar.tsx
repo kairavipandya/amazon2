@@ -6,7 +6,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useCart } from "@/context/CartContext";
-import {useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
@@ -16,9 +16,8 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (typeof window != "undefined") {
+    if (typeof window !== "undefined") {
       const loginState = localStorage.getItem("isLoggedIn");
-      console.log("🧪 loginState:", loginState);
       setIsLoggedIn(loginState === "true");
     }
   }, [pathname]);
@@ -37,7 +36,7 @@ export default function Navbar() {
             <MenuIcon fontSize="small" />
             Categories
           </button>
-          <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
+          <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
             <ul className="text-sm text-black p-2 space-y-1">
               {[
                 "Electronics",
@@ -81,23 +80,29 @@ export default function Navbar() {
         {/* Settings */}
         <SettingsIcon fontSize="medium" className="cursor-pointer" />
 
-        
-        {isLoggedIn ? (
-          <div className="relative group cursor-pointer flex items-center">
-              <AccountCircleIcon fontSize="medium" />
+        {/* Seller tab */}
+        <Link href="/seller">
+          <button className="bg-transparent text-[#851717] px-4 py-1.5 rounded-full text-sm hover:underline">
+            Seller Portal
+          </button>
+        </Link>
 
-            {/* Dropdown remains visible on hover of icon or menu */}
-            <div className="absolute right-0 mt-37 w-40 bg-white shadow-lg rounded-md z-50 
-                            opacity-0 group-hover:opacity-100 
-                            pointer-events-none group-hover:pointer-events-auto 
-                            transition duration-200">
+        {/* Profile or Sign In */}
+        {isLoggedIn ? (
+          <div className="relative group">
+            <AccountCircleIcon fontSize="medium" className="cursor-pointer" />
+            <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
               <ul className="text-sm text-black p-2 space-y-1">
-                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Orders</li>
-                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Settings</li>
+                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+                  Orders
+                </li>
+                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+                  Settings
+                </li>
                 <li
                   onClick={async () => {
                     try {
-                      const res = await fetch("http://localhost:5000/api/logout", {
+                      await fetch("http://localhost:5000/api/logout", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
@@ -105,7 +110,6 @@ export default function Navbar() {
                           confirmationClicked: "Valid",
                         }),
                       });
-                      const data = await res.json();
                       localStorage.removeItem("isLoggedIn");
                       window.location.href = "/login";
                     } catch (err) {
