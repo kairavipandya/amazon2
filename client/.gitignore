@@ -10,6 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 client/node_modules
+/node_modules/
+/client./next/
 # testing
 /coverage
 
