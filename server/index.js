@@ -6,6 +6,7 @@ const cors = require("cors");
 const { logout } = require("./logout");
 const { login } = require("./login");
 const { addProduct, productSearch } = require("./product");
+const User = require("./models/User");
 
 const app = express();
 app.use(cors());
@@ -15,14 +16,36 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
 
-app.post("/api/login", (req, res) => {
+app.post("/api/signup", async (req, res) => {
+console.log("SIGNUP hit");
+
   const { username, password } = req.body;
-  const result = login(username, password);
+
+  try {
+    const existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      return res.status(409).json({ message: "Username already taken" });
+    }
+
+    const newUser = new User({ username, password }); // You’ll hash this later
+    await newUser.save();
+
+    res.json({ message: "Signup successful" });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+  const result = await login(username, password);
 
   if (result === "Success") {
     res.json({ message: "Login successful" });
   } else {
-    res.status(401).json({ message: "Invalid credentials" });
+    res.status(401).json({ message: result }); // <-- Passes "Invalid credentials"
   }
 });
 
