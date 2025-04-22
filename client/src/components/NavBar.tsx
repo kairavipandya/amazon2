@@ -36,7 +36,7 @@ export default function Navbar() {
             <MenuIcon fontSize="small" />
             Categories
           </button>
-          <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
+          <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
             <ul className="text-sm text-black p-2 space-y-1">
               {[
                 "Electronics",
@@ -66,7 +66,7 @@ export default function Navbar() {
       <SearchBar />
 
       {/* Right: Icons */}
-      <div className="flex items-center gap-4 text-[#851717]">
+      <div className="flex items-center gap-4 text-[#851717] relative">
         {/* Cart */}
         <Link href="/cart" className="relative">
           <ShoppingCartIcon fontSize="medium" className="cursor-pointer" />
@@ -80,25 +80,23 @@ export default function Navbar() {
         {/* Settings */}
         <SettingsIcon fontSize="medium" className="cursor-pointer" />
 
-        {/* Seller tab */}
+        {/* Seller Tab */}
         <Link href="/seller">
           <button className="bg-transparent text-[#851717] px-4 py-1.5 rounded-full text-sm hover:underline">
             Seller Portal
           </button>
         </Link>
 
-        {/* Profile or Sign In */}
+        {/* Profile Dropdown */}
         {isLoggedIn ? (
           <div className="relative group">
-            <AccountCircleIcon fontSize="medium" className="cursor-pointer" />
-            <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
+            <button className="flex items-center">
+              <AccountCircleIcon fontSize="medium" className="cursor-pointer" />
+            </button>
+            <div className="absolute top-full right-0 mt-0 w-44 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
               <ul className="text-sm text-black p-2 space-y-1">
-                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
-                  Orders
-                </li>
-                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
-                  Settings
-                </li>
+                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Orders</li>
+                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Settings</li>
                 <li
                   onClick={async () => {
                     try {
