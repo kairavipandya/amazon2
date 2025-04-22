@@ -1,4 +1,6 @@
+require("dotenv").config();
 require('./db');
+
 const express = require("express");
 const cors = require("cors");
 const { logout } = require("./logout");
@@ -30,14 +32,13 @@ app.post("/api/logout", (req, res) => {
   res.json({ message: result });
 });
 
-app.post("/api/add-product", (req, res) => {
-  console.log("✅ Add product hit:", req.body);
+app.post("/api/add-product", async (req, res) => {
   const { name, price, quantity } = req.body;
   const result = addProduct(name, price, quantity);
   res.json({ message: result });
 });
 
-app.get("/api/search-product", (req, res) => {
+app.get("/api/search-product", async (req, res) => {
   const { keyword } = req.query;
   const result = productSearch(keyword);
   res.json({ message: result });
