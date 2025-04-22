@@ -113,3 +113,5 @@ function runTests() {
     assertEquals(productSearch(''), 'Invalid Search Query, Please Try Again');
 }
 runTests();
+
+module.exports = { addProduct, productSearch };
