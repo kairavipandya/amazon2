@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -45,9 +46,11 @@ export default function LoginForm() {
         <h1 className="text-3xl font-bold text-center text-black">Amazon2</h1>
         <p className="text-center text-gray-600 mt-1 text-sm">
           Don’t have an account?{" "}
-          <a href="#" className="text-secondary font-semibold hover:underline">
-            Sign up now!
-          </a>
+          <Link href="/signup">
+            <span className="text-secondary font-semibold hover:underline">
+              Sign up now!
+            </span>
+          </Link>
         </p>
 
         <div className="mt-6">
