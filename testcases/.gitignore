@@ -38,8 +38,8 @@ bin/
 ### VS Code ###
 .vscode/
 client/node_modules
-/node_modules
-client/.next
+/node_modules/
+/client/.next/
 
 ### Mac OS ###
 .DS_Store
