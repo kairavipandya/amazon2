@@ -21,6 +21,7 @@ function logout(logoutClicked, confirmationClicked) {
     return "Unknown";
 }
 
+module.exports = { logout };
 //test cases
 
 const testCases = [

@@ -1,115 +1,61 @@
-//Product Class includes name, price, and quantity with getters for the three variables
-class product {
-  constructor(name, price, quantity) {
-    this.name = name;
-    this.price = price;
-    this.quantity = quantity;
-  }
+const mongoose = require('mongoose');
 
-  getName(){
-    return this.name;
-  }
+// Schema definition
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true },
+});
 
-  getPrice(){
-    return this.price;
-  }
+// Model
+const ProductModel = mongoose.model('Product', productSchema);
 
-  getQuantity(){
-    return this.quantity;
-  }
-}
-
-let productList = [];
-//addProduct function takes in string Name, numbers Price and Quantity
-function addProduct(Name, Price, Quantity) {
-  //Tests if Name is a string, if not then sends a message
-  if (typeof Name === 'string' || Name instanceof String) {
-    if (Name === "" || Name === " " || Name === null) {
-      console.log('Please enter a valid name for your product.');
-      return 'Please enter a valid name for your product.';
-    }
-  }
-  else {
-    console.log('Please enter a valid name for your product.');
+// Add a product with validation
+async function addProduct(name, price, quantity) {
+  if (typeof name !== 'string' || !name.trim()) {
     return 'Please enter a valid name for your product.';
   }
-  
-  //Tests if Price is a number, if not then sends a message
-  if (typeof Price !== "number" || Price < 0 || !Number.isFinite(Price) || Price == null) {
-    console.log('Please enter a valid price for your product.');
+  if (typeof price !== 'number' || price < 0 || !Number.isFinite(price)) {
     return 'Please enter a valid price for your product.';
   }
-  
-  //Tests if Quantity is a whole number, if not then sends a message
-  if (!Number.isInteger(Quantity) || Quantity === null || Quantity < 0) {
-    console.log('Please enter a valid quantity for your product.');
+  if (!Number.isInteger(quantity) || quantity < 0) {
     return 'Please enter a valid quantity for your product.';
   }
-  
-  productList.push(new product(Name, Price, Quantity));
-  console.log('Success!');
-  return 'Success!';
+
+  try {
+    const newProduct = new ProductModel({ name, price, quantity });
+    await newProduct.save();
+    return 'Success!';
+  } catch (err) {
+    console.error('Error saving product:', err);
+    return 'Failed to save product.';
+  }
 }
 
-//Searches for products by keyword in the name
-function productSearch(keyword) {
-  if (keyword === "" || keyword === " " || keyword === null) {
-    console.log('Invalid Search Query, Please Try Again');
+// Search for products by keyword
+async function productSearch(keyword) {
+  if (!keyword || !keyword.trim()) {
     return 'Invalid Search Query, Please Try Again';
   }
-  
-  const results = productList.filter(product => 
-    product.getName().toLowerCase().includes(keyword.toLowerCase())
-  );
 
-  if (results.length > 0) {
-    let message = 'Products found:\n';
-    results.forEach(product => {
-      const productInfo = `${product.getName()} - $${product.getPrice()}\n`;
-      message += productInfo;
-      console.log(message);
+  try {
+    const results = await ProductModel.find({
+      name: { $regex: keyword, $options: 'i' },
     });
-    return message;
-  } else {
-    console.log('No products match your search.');
-    return 'No products match your search.';
+
+    if (results.length > 0) {
+      let message = 'Products found:\n';
+      results.forEach((product) => {
+        message += `${product.name} - $${product.price}\n`;
+      });
+      return message;
+    } else {
+      return 'No products match your search.';
+    }
+  } catch (err) {
+    console.error('Search error:', err);
+    return 'Failed to perform search.';
   }
 }
 
-//tests if the actual equals the expected
-function assertEquals(actual, expected) {
-  if (actual === expected) {
-    console.log('Passed!');
-  } else {
-    console.log('Failed!');
-  }
-}
-
-function runTests() {
-    //addProduct Test Cases
-    //All 3 variables are valid
-    assertEquals(addProduct('Chair', 40, 50), 'Success!');
-    //Quantity is a string
-    assertEquals(addProduct('Chair', 40, 'fifty'), 'Please enter a valid quantity for your product.');
-    //Quantity is negative
-    assertEquals(addProduct('Chair', 40, -50), 'Please enter a valid quantity for your product.');
-    //Price is a string
-    assertEquals(addProduct('Chair', 'Fourty', 50), 'Please enter a valid price for your product.');
-    //Price is negative
-    assertEquals(addProduct('Chair', -40, 50), 'Please enter a valid price for your product.');
-    //Name is a space
-    assertEquals(addProduct(' ', 40, 50), 'Please enter a valid name for your product.');
-    //Name is null
-    assertEquals(addProduct(null, 40, 50), 'Please enter a valid name for your product.');
-
-    
-    //searchProduct Test Cases
-    //Valid search query
-    addProduct("Dog Toy", 10, 30);
-    assertEquals(productSearch('Dog Toy'), 'Products found:\nDog Toy - $10\n');
-    //Search query does not exist
-    assertEquals(productSearch('asdf'), 'No products match your search.');
-    //Search for an empty string
-    assertEquals(productSearch(''), 'Invalid Search Query, Please Try Again');
-}
-runTests();
+module.exports = { addProduct, productSearch };
