@@ -1,6 +1,7 @@
 require("dotenv").config();
 require('./db');
 
+const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const { logout } = require("./logout");
@@ -16,26 +17,10 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
 
-app.post("/api/signup", async (req, res) => {
-console.log("SIGNUP hit");
-
-  const { username, password } = req.body;
-
-  try {
-    const existingUser = await User.findOne({ username });
-
-    if (existingUser) {
-      return res.status(409).json({ message: "Username already taken" });
-    }
-
-    const newUser = new User({ username, password }); // You’ll hash this later
-    await newUser.save();
-
-    res.json({ message: "Signup successful" });
-  } catch (err) {
-    console.error("Signup error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
+app.get("/api/category/automotive", async (req, res) => {
+  const collection = mongoose.connection.collection("automotive");
+  const products = await collection.find({}).toArray();
+  res.json(products);
 });
 
 app.post("/api/login", async (req, res) => {
@@ -69,12 +54,14 @@ app.get("/api/search-product", async (req, res) => {
 
 app.get("/api/category/:name", async (req, res) => {
   try {
-    const collectionName = req.params.name.toLowerCase();
-    const collection = mongoose.connection.collection(collectionName);
-    const items = await collection.find({}).toArray();
-    res.json(items);
+    const categoryName = req.params.name;
+
+    const collection = mongoose.connection.db.collection(categoryName.toLowerCase());
+    const products = await collection.find().toArray();
+
+    res.json(products);
   } catch (err) {
-    console.error("Category fetch error:", err);
+    console.error("❌ Failed to fetch category:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
