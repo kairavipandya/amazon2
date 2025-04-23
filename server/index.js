@@ -67,5 +67,17 @@ app.get("/api/search-product", async (req, res) => {
   res.json({ message: result });
 });
 
+app.get("/api/category/:name", async (req, res) => {
+  try {
+    const collectionName = req.params.name.toLowerCase();
+    const collection = mongoose.connection.collection(collectionName);
+    const items = await collection.find({}).toArray();
+    res.json(items);
+  } catch (err) {
+    console.error("Category fetch error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
