@@ -38,25 +38,24 @@ export default function Navbar() {
           </button>
           <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
             <ul className="text-sm text-black p-2 space-y-1">
-              {[
-                "Electronics",
-                "Clothing",
-                "Books",
-                "Beauty & Personal Care",
-                "Home & Kitchen",
-                "Toys & Games",
-                "Grocery",
-                "Sports & Outdoors",
-                "Automotive",
-                "Health & Wellness",
-              ].map((cat, i) => (
-                <li
-                  key={i}
-                  className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer"
-                >
-                  {cat}
-                </li>
-              ))}
+            {[
+              { name: "Electronics", slug: "electronics" },
+              { name: "Clothing", slug: "clothing" },
+              { name: "Books", slug: "books" },
+              { name: "Beauty & Personal Care", slug: "beautyAndPersonalCare" },
+              { name: "Home & Kitchen", slug: "homeAndKitchen" },
+              { name: "Toys & Games", slug: "toysAndGames" },
+              { name: "Grocery", slug: "grocery" },
+              { name: "Sports & Outdoors", slug: "sportsAndOutdoors" },
+              { name: "Automotive", slug: "automotive" },
+              { name: "Health & Wellness", slug: "healthAndWellness" },
+            ].map((cat, i) => (
+              <li key={i} className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+                <Link href={`/category/${cat.slug}`}>
+                  {cat.name}
+              </Link>
+              </li>
+            ))}
             </ul>
           </div>
         </div>
