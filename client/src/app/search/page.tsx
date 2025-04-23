@@ -81,12 +81,11 @@ export default function SearchPage() {
               </button>
 
               <p className="text-sm mt-2">{item.name}</p>
-              <div className="text-sm flex items-center justify-between mt-1">
-                <span className="text-[#851717] font-semibold">{item.price}</span>
-                <span className="flex items-center text-xs gap-1">
-                  {item.rating} <span className="text-yellow-500">★</span>
-                </span>
-              </div>
+
+              <p className="text-xs text-gray-700 mt-1">Rating: {item.rating} ★</p>
+
+              <p className="text-[#851717] font-semibold text-sm mt-1">{item.price}</p>
+
 
               {/* Cart icon */}
               <button

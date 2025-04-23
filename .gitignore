@@ -1,7 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
-/node_modules
+node_modules/
+client/node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -9,9 +12,6 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-client/node_modules
-/node_modules/
-/client./next/
 # testing
 /coverage
 
@@ -41,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# special native bindings
+client/node_modules/@next/swc-win32-x64-msvc/next-swc.win32-x64-msvc.node
