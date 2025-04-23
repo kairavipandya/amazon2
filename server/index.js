@@ -72,5 +72,47 @@ app.get("/api/category/beautyAndPersonalCare", async (req, res) => {
   res.json(products);
 });
 
+const { processCheckout } = require("./checkout");
+
+app.post("/api/checkout", (req, res) => {
+  const { cardNumber, cvv, expirationDate } = req.body;
+  const result = processCheckout(cardNumber, cvv, expirationDate);
+  res.json({ message: result });
+});
+
+app.get("/api/all-products", async (req, res) => {
+  try {
+    const db = mongoose.connection.db;
+
+    // You can list all collections and fetch from each if needed
+    const collections = await db.listCollections().toArray();
+
+    let allProducts = [];
+
+    for (const col of collections) {
+      const collection = db.collection(col.name);
+      const items = await collection.find().toArray();
+
+      // Normalize with category and map
+      const formatted = items.map(item => ({
+        _id: item._id,
+        Name: item.Name || item.name,
+        Price: item.Price || item.price,
+        Quantity: item.Quantity || item.quantity,
+        Rating: item.Rating || "4.9",
+        imageUrl: item.imageUrl || item.image || "/fallback.jpg",
+        category: col.name
+      }));
+
+      allProducts = [...allProducts, ...formatted];
+    }
+
+    res.json(allProducts);
+  } catch (err) {
+    console.error("❌ Failed to fetch all products:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
