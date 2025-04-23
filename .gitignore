@@ -12,7 +12,6 @@ client/node_modules/
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
 # testing
 /coverage
 
