@@ -1,27 +1,30 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Favorite, FavoriteBorder, AddShoppingCart } from "@mui/icons-material";
+import { useCart } from "@/context/CartContext";
+import Navbar from "@/components/NavBar"; // ✅ make sure path matches
+import Image from "next/image";
 
 type Product = {
-    _id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    imageUrl?: string; // optional if some products don't have it
-  };
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl?: string;
+};
 
 export default function CategoryPage() {
   const { name } = useParams();
+  const { addToCart } = useCart();
   const [items, setItems] = useState<Product[]>([]);
+  const [liked, setLiked] = useState<boolean[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-        console.log("Fetching", name);
       try {
         const res = await fetch(`http://localhost:5000/api/category/${name}`);
         const rawData = await res.json();
-  
-        // Normalize casing from MongoDB
         const normalized = rawData.map((item: any) => ({
           _id: item._id,
           name: item.Name,
@@ -29,39 +32,77 @@ export default function CategoryPage() {
           quantity: item.Quantity,
           imageUrl: item.imageUrl,
         }));
-        console.log("Normalized:", normalized);
         setItems(normalized);
+        setLiked(Array(normalized.length).fill(false));
       } catch (err) {
         console.error("Fetch error:", err);
       }
     }
-  
     fetchData();
   }, [name]);
 
+  const toggleLike = (index: number) => {
+    const updated = [...liked];
+    updated[index] = !updated[index];
+    setLiked(updated);
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 capitalize">{name}</h1>
-      {items.length === 0 ? (
-        <p>No products found.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+      <Navbar />
+
+      <div className="max-w-7xl mx-auto px-6 mt-6">
+        <h1 className="text-2xl font-bold mb-6 capitalize">{name}</h1>
+
+        {items.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {items.map((item, i) => (
-                <div key={i} className="border rounded-lg shadow-md p-4 bg-white">
-                    {item.imageUrl && (
-                        <img
-                            src={item.imageUrl}
-                            alt={item.name}
-                            className="w-full h-48 object-contain mb-4"
-                        />
-                    )}
-                    <h2 className="text-lg font-bold mb-2">{item.name}</h2>
-                    <p className="text-gray-700">${item.price}</p>
-                    <p className="text-sm text-gray-500">{item.quantity} in stock</p>
-                </div>
+              <div
+                key={i}
+                className="bg-white p-2 rounded-xl shadow-sm relative hover:shadow-md transition-shadow"
+              >
+                {item.imageUrl && (
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.name}
+                    width={250}
+                    height={250}
+                    className="w-full h-36 md:h-40 object-cover rounded-lg"
+                  />
+                )}
+
+                {/* Like button */}
+                <button
+                  onClick={() => toggleLike(i)}
+                  className="absolute top-2 right-2 bg-white p-1 rounded-full"
+                >
+                  {liked[i] ? (
+                    <Favorite className="text-[#851717]" />
+                  ) : (
+                    <FavoriteBorder className="text-black" />
+                  )}
+                </button>
+
+                <p className="text-sm mt-2 font-medium">{item.name}</p>
+                <p className="text-xs text-gray-700 mt-1">
+                  {item.quantity} in stock
+                </p>
+                <p className="text-[#851717] font-semibold text-sm mt-1">${item.price}</p>
+
+                {/* Cart icon */}
+                <button
+                  onClick={() => addToCart(item)}
+                  className="absolute bottom-2 right-2 text-gray-600 hover:text-black cursor-pointer"
+                >
+                  <AddShoppingCart />
+                </button>
+              </div>
             ))}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
