@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* Cart */}
         <Link href="/cart" className="relative">
           <ShoppingCartIcon fontSize="medium" className="cursor-pointer" />
-          {cartCount > 0 && (
+          {typeof cartCount === "number" && cartCount > 0 && (
             <span className="absolute -top-2 -right-2 text-xs bg-white text-[#851717] rounded-full px-1.5 py-0.5 font-bold">
               {cartCount}
             </span>
@@ -94,7 +94,9 @@ export default function Navbar() {
             </button>
             <div className="absolute top-full right-0 mt-0 w-44 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
               <ul className="text-sm text-black p-2 space-y-1">
-                <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Orders</li>
+                <Link href="/orders">
+                  <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Orders</li>
+                </Link>
                 <li className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">Settings</li>
                 <li
                   onClick={async () => {

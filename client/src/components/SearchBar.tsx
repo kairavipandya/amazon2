@@ -8,7 +8,10 @@ export default function SearchBar() {
   const router = useRouter();
 
   const handleSearch = () => {
-    router.push("/search");
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+      setQuery("");
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
