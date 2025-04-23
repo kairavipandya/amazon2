@@ -93,7 +93,14 @@ export default function CategoryPage() {
 
                 {/* Cart icon */}
                 <button
-                  onClick={() => addToCart(item)}
+                  onClick={() =>
+                    addToCart({
+                      name: item.name,
+                      price: item.price,
+                      image: item.imageUrl || "",
+                      quantity: 1,
+                    })
+                  }
                   className="absolute bottom-2 right-2 text-gray-600 hover:text-black cursor-pointer"
                 >
                   <AddShoppingCart />
