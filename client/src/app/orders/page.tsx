@@ -78,7 +78,7 @@ export default function OrdersPage() {
                 </div>
 
                 <div className="mt-4 text-right font-semibold text-[#851717]">
-                  Total: ${order.total.toFixed(2)}
+                  Total: ${Number(order.total).toFixed(2)}
                 </div>
               </div>
             ))}
