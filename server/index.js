@@ -23,6 +23,28 @@ app.get("/api/category/automotive", async (req, res) => {
   res.json(products);
 });
 
+app.post("/api/signup", async (req, res) => {
+  console.log("SIGNUP hit");
+  
+    const { username, password } = req.body;
+  
+    try {
+      const existingUser = await User.findOne({ username });
+  
+      if (existingUser) {
+        return res.status(409).json({ message: "Username already taken" });
+      }
+  
+      const newUser = new User({ username, password }); // You’ll hash this later
+      await newUser.save();
+  
+      res.json({ message: "Signup successful" });
+    } catch (err) {
+      console.error("Signup error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   const result = await login(username, password);
