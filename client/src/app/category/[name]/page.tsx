@@ -23,7 +23,7 @@ export default function CategoryPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`http://localhost:5000/api/category/${name}`);
+        const res = await fetch(`http://localhost:5050/api/category/${name}`);
         const rawData = await res.json();
         const normalized = rawData.map((item: any) => ({
           _id: item._id,

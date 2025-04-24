@@ -136,5 +136,5 @@ app.get("/api/all-products", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = 5050;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

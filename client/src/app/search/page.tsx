@@ -16,7 +16,7 @@ export default function SearchPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:5000/api/all-products"); // You can also loop through categories if needed
+        const res = await fetch("http://localhost:5050/api/all-products"); // You can also loop through categories if needed
         const data = await res.json();
 
         const filtered = data.filter((item: any) =>
