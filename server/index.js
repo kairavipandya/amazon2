@@ -66,12 +66,20 @@ app.post("/api/add-product", async (req, res) => {
   const { Name, Price, Quantity, Category, imageUrl } = req.body;
 
   if (!Name || !Price || !Quantity || !Category) {
+    console.log("Missing field(s):", { Name, Price, Quantity, Category });
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
-    const collection = mongoose.connection.db.collection(category);
-    await collection.insertOne({ Name, Price, Quantity, imageUrl });
+    const normalizedCategory = Category.toLowerCase(); // Ensure consistent collection name
+    const collection = mongoose.connection.db.collection(normalizedCategory);
+
+    await collection.insertOne({
+      Name,
+      Price,
+      Quantity,
+      imageUrl,
+    });
 
     res.json({ message: "Product added successfully" });
   } catch (err) {
