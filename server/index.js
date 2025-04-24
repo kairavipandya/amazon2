@@ -63,9 +63,21 @@ app.post("/api/logout", (req, res) => {
 });
 
 app.post("/api/add-product", async (req, res) => {
-  const { name, price, quantity } = req.body;
-  const result = addProduct(name, price, quantity);
-  res.json({ message: result });
+  const { Name, Price, Quantity, Category, imageUrl } = req.body;
+
+  if (!Name || !Price || !Quantity || !Category) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
+
+  try {
+    const collection = mongoose.connection.db.collection(category);
+    await collection.insertOne({ Name, Price, Quantity, imageUrl });
+
+    res.json({ message: "Product added successfully" });
+  } catch (err) {
+    console.error("❌ Error adding product:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.get("/api/search-product", async (req, res) => {
@@ -124,7 +136,7 @@ app.get("/api/all-products", async (req, res) => {
         Rating: item.Rating || "4.9",
         imageUrl: item.imageUrl || item.image || "/fallback.jpg",
         category: col.name
-      }));
+      }));      
 
       allProducts = [...allProducts, ...formatted];
     }
