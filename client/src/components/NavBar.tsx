@@ -11,16 +11,19 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { cart } = useCart();
-  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // ✅ for hydration safety
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      setIsMounted(true);
       const loginState = localStorage.getItem("isLoggedIn");
       setIsLoggedIn(loginState === "true");
     }
   }, [pathname]);
+
+  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav className="bg-[#F2EAE0] px-6 py-3 flex items-center justify-between font-sans">
@@ -30,7 +33,6 @@ export default function Navbar() {
           A2
         </Link>
 
-        {/* Categories Dropdown */}
         <div className="relative group">
           <button className="flex items-center gap-1 text-[#851717] font-medium">
             <MenuIcon fontSize="small" />
@@ -38,24 +40,22 @@ export default function Navbar() {
           </button>
           <div className="absolute top-full left-0 mt-0 w-56 bg-white shadow-lg rounded-md z-50 hidden group-hover:block">
             <ul className="text-sm text-black p-2 space-y-1">
-            {[
-              { name: "Electronics", slug: "electronics" },
-              { name: "Clothing", slug: "clothing" },
-              { name: "Books", slug: "books" },
-              { name: "Beauty & Personal Care", slug: "beautyAndPersonalCare" },
-              { name: "Home & Kitchen", slug: "homeAndKitchen" },
-              { name: "Toys & Games", slug: "toysAndGames" },
-              { name: "Grocery", slug: "grocery" },
-              { name: "Sports & Outdoors", slug: "sportsAndOutdoors" },
-              { name: "Automotive", slug: "automotive" },
-              { name: "Health & Wellness", slug: "healthAndWellness" },
-            ].map((cat, i) => (
-              <li key={i} className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
-                <Link href={`/category/${cat.slug}`}>
-                  {cat.name}
-              </Link>
-              </li>
-            ))}
+              {[
+                { name: "Electronics", slug: "electronics" },
+                { name: "Clothing", slug: "clothing" },
+                { name: "Books", slug: "books" },
+                { name: "Beauty & Personal Care", slug: "beautyAndPersonalCare" },
+                { name: "Home & Kitchen", slug: "homeAndKitchen" },
+                { name: "Toys & Games", slug: "toysAndGames" },
+                { name: "Grocery", slug: "grocery" },
+                { name: "Sports & Outdoors", slug: "sportsAndOutdoors" },
+                { name: "Automotive", slug: "automotive" },
+                { name: "Health & Wellness", slug: "healthAndWellness" },
+              ].map((cat, i) => (
+                <li key={i} className="hover:bg-gray-100 px-3 py-2 rounded cursor-pointer">
+                  <Link href={`/category/${cat.slug}`}>{cat.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* Cart */}
         <Link href="/cart" className="relative">
           <ShoppingCartIcon fontSize="medium" className="cursor-pointer" />
-          {typeof cartCount === "number" && cartCount > 0 && (
+          {isMounted && typeof cartCount === "number" && cartCount > 0 && (
             <span className="absolute -top-2 -right-2 text-xs bg-white text-[#851717] rounded-full px-1.5 py-0.5 font-bold">
               {cartCount}
             </span>
@@ -79,14 +79,14 @@ export default function Navbar() {
         {/* Settings */}
         <SettingsIcon fontSize="medium" className="cursor-pointer" />
 
-        {/* Seller Tab */}
+        {/* Seller Portal */}
         <Link href="/seller">
           <button className="bg-transparent text-[#851717] px-4 py-1.5 rounded-full text-sm hover:underline">
             Seller Portal
           </button>
         </Link>
 
-        {/* Profile Dropdown */}
+        {/* Profile */}
         {isLoggedIn ? (
           <div className="relative group">
             <button className="flex items-center">

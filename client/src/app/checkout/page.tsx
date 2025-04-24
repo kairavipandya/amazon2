@@ -3,7 +3,7 @@ import { useCart } from "@/context/CartContext";
 import Navbar from "@/components/NavBar";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -11,6 +11,11 @@ export default function CheckoutPage() {
   const [cvv, setCvv] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [message, setMessage] = useState("");
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserId(localStorage.getItem("userId"));
+  }, []);
 
   const totalPrice = cart.reduce((acc, item) => {
     const numeric = typeof item.price === "string" ? parseFloat(item.price.replace("$", "")) : item.price;
@@ -66,10 +71,22 @@ export default function CheckoutPage() {
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+
+                if (!userId) {
+                  setMessage("You must be logged in to place an order.");
+                  return;
+                }
+
                 const res = await fetch("http://localhost:5000/api/checkout", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ cardNumber, cvv, expirationDate }),
+                  body: JSON.stringify({
+                    cardNumber,
+                    cvv,
+                    expirationDate,
+                    userId,
+                    items: cart,
+                  }),
                 });
 
                 const data = await res.json();
@@ -79,15 +96,15 @@ export default function CheckoutPage() {
                   const order = {
                     id: Math.floor(Math.random() * 1000000),
                     items: cart,
-                    total: totalPrice.toFixed(2),
+                    total: parseFloat(totalPrice.toFixed(2)),
                     date: new Date().toISOString(),
                   };
 
                   const prevOrders = JSON.parse(localStorage.getItem("orders") || "[]");
                   localStorage.setItem("orders", JSON.stringify([...prevOrders, order]));
 
-                  clearCart(); // optional if you want to reset the cart
-                  window.location.href = "/orders"; // or use router.push("/orders") if using next/router
+                  clearCart();
+                  window.location.href = "/orders";
                 }
               }}
               className="space-y-4 mt-6"
@@ -123,11 +140,13 @@ export default function CheckoutPage() {
                 Place Order
               </button>
             </form>
+
             {message && (
               <p className="mt-4 text-center text-[#851717] font-medium">{message}</p>
             )}
           </>
         )}
+
         <div className="mt-4 text-sm text-gray-500 text-center">
           <Link href="/cart" className="hover:underline text-[#851717]">
             ← Back to Cart
