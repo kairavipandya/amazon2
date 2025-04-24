@@ -11,7 +11,7 @@ const User = require("./models/User");
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "100mb" }));
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
