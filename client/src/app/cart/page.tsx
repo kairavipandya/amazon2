@@ -6,7 +6,7 @@ export default function CartPage() {
   const { cart, increaseQty, decreaseQty } = useCart();
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
       <div className="max-w-5xl mx-auto px-6 py-10">
         <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
@@ -53,7 +53,7 @@ export default function CartPage() {
             <div className="flex justify-end mt-6">
               <a
                 href="/checkout"
-                className="bg-[#851717] text-white px-6 py-2 rounded-full hover:bg-[#6c1212] transition"
+                className="bg-secondary text-white px-6 py-2 rounded-full hover:bg-[#6c1212] transition"
               >
                 Proceed to Checkout
               </a>

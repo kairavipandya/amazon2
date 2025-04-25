@@ -49,12 +49,12 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 mt-6">
         <h2 className="text-xl font-semibold mt-2 mb-4">
-          Results for: <span className="text-[#851717]">"{query}"</span>
+          Results for: <span className="text-secondary">"{query}"</span>
         </h2>
 
         {items.length === 0 ? (
@@ -75,14 +75,14 @@ export default function SearchPage() {
                   className="absolute top-2 right-2 bg-white p-1 rounded-full"
                 >
                   {liked[i] ? (
-                    <Favorite className="text-[#851717]" />
+                    <Favorite className="text-secondary" />
                   ) : (
                     <FavoriteBorder className="text-black" />
                   )}
                 </button>
                 <p className="text-sm mt-2">{item.name}</p>
                 <p className="text-xs text-gray-700 mt-1">Rating: {item.rating} ★</p>
-                <p className="text-[#851717] font-semibold text-sm mt-1">${item.price}</p>
+                <p className="text-secondary font-semibold text-sm mt-1">${item.price}</p>
                 <button
                   onClick={() => addToCart(item)}
                   className="absolute bottom-2 right-2 text-gray-600 hover:text-black cursor-pointer"

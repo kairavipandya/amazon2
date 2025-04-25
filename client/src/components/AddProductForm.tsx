@@ -103,13 +103,13 @@ export default function AddProductForm() {
       />
       <button
         type="submit"
-        className="bg-[#851717] text-white px-4 py-2 rounded hover:opacity-90"
+        className="bg-secondary text-white px-4 py-2 rounded hover:opacity-90"
       >
         Add Product
       </button>
 
       {message && (
-        <p className="text-center mt-2 text-sm text-[#851717]">
+        <p className="text-center mt-2 text-sm text-secondary">
           {typeof message === "string" ? message : JSON.stringify(message)}
         </p>  
       )}

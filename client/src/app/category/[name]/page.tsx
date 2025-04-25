@@ -48,7 +48,7 @@ export default function CategoryPage() {
   };
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 mt-6">
@@ -79,7 +79,7 @@ export default function CategoryPage() {
                   className="absolute top-2 right-2 bg-white p-1 rounded-full"
                 >
                   {liked[i] ? (
-                    <Favorite className="text-[#851717]" />
+                    <Favorite className="text-secondary" />
                   ) : (
                     <FavoriteBorder className="text-black" />
                   )}
@@ -89,7 +89,7 @@ export default function CategoryPage() {
                 <p className="text-xs text-gray-700 mt-1">
                   {item.quantity} in stock
                 </p>
-                <p className="text-[#851717] font-semibold text-sm mt-1">${item.price}</p>
+                <p className="text-secondary font-semibold text-sm mt-1">${item.price}</p>
 
                 {/* Cart icon */}
                 <button

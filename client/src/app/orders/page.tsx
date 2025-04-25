@@ -34,7 +34,7 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-6 py-10">
@@ -50,7 +50,7 @@ export default function OrdersPage() {
                 className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
               >
                 <div className="mb-3 text-sm text-gray-600">
-                  <span className="font-medium text-[#851717]">Order #{order.id}</span> &middot;{" "}
+                  <span className="font-medium text-secondary">Order #{order.id}</span> &middot;{" "}
                   Placed on {order.date}
                 </div>
 
@@ -77,7 +77,7 @@ export default function OrdersPage() {
                   ))}
                 </div>
 
-                <div className="mt-4 text-right font-semibold text-[#851717]">
+                <div className="mt-4 text-right font-semibold text-secondary">
                   Total: ${Number(order.total).toFixed(2)}
                 </div>
               </div>

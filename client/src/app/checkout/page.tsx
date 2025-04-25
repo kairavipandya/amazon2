@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   }, 0);
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 py-10">
@@ -52,7 +52,7 @@ export default function CheckoutPage() {
                       {item.quantity} × {item.price}
                     </p>
                   </div>
-                  <p className="font-semibold text-[#851717]">
+                  <p className="font-semibold text-secondary">
                     ${(
                       parseFloat(
                         typeof item.price === "string" ? item.price.replace("$", "") : item.price
@@ -65,7 +65,7 @@ export default function CheckoutPage() {
 
             <div className="mt-6 flex justify-between items-center text-lg font-semibold">
               <p>Total:</p>
-              <p className="text-[#851717]">${totalPrice.toFixed(2)}</p>
+              <p className="text-secondary">${totalPrice.toFixed(2)}</p>
             </div>
 
             <form
@@ -135,20 +135,20 @@ export default function CheckoutPage() {
               />
               <button
                 type="submit"
-                className="w-full bg-[#851717] text-white py-3 rounded-full hover:bg-[#6c1212] transition"
+                className="w-full bg-secondary text-white py-3 rounded-full hover:bg-[#6c1212] transition"
               >
                 Place Order
               </button>
             </form>
 
             {message && (
-              <p className="mt-4 text-center text-[#851717] font-medium">{message}</p>
+              <p className="mt-4 text-center text-secondary font-medium">{message}</p>
             )}
           </>
         )}
 
         <div className="mt-4 text-sm text-gray-500 text-center">
-          <Link href="/cart" className="hover:underline text-[#851717]">
+          <Link href="/cart" className="hover:underline text-secondary">
             ← Back to Cart
           </Link>
         </div>

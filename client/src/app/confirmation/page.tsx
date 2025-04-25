@@ -11,11 +11,11 @@ export default function ConfirmationPage() {
   }, []);
 
   return (
-    <div className="bg-[#F2EAE0] min-h-screen flex flex-col items-center justify-center font-sans text-[#111] px-4">
-      <h1 className="text-2xl font-bold mb-4 text-[#851717]">Thank you for your order!</h1>
+    <div className="bg-primary min-h-screen flex flex-col items-center justify-center font-sans text-[#111] px-4">
+      <h1 className="text-2xl font-bold mb-4 text-secondary">Thank you for your order!</h1>
       <p className="mb-2">Your order has been placed successfully.</p>
       <p className="mb-6 text-sm text-gray-700">Order ID: <span className="font-semibold">{orderId}</span></p>
-      <Link href="/" className="bg-[#851717] text-white px-6 py-2 rounded-full hover:bg-[#6c1212] transition">
+      <Link href="/" className="bg-secondary text-white px-6 py-2 rounded-full hover:bg-[#6c1212] transition">
         Continue Shopping
       </Link>
     </div>

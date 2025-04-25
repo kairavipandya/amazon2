@@ -76,7 +76,7 @@ export default function LoginForm() {
         </div>
 
         <div className="flex justify-between items-center mt-4 text-sm">
-          <label className="flex items-center text-[#851717]">
+          <label className="flex items-center text-secondary">
             <input type="checkbox" className="mr-2" />
             Remember me
           </label>

@@ -26,7 +26,7 @@ export default function Navbar() {
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <nav className="bg-[#F2EAE0] px-6 py-3 flex items-center justify-between font-sans">
+    <nav className="bg-primary px-6 py-3 flex items-center justify-between font-sans">
       {/* Left: Logo + Categories */}
       <div className="flex items-center gap-6">
         <Link href="/" className="text-2xl font-bold text-black">
@@ -34,7 +34,7 @@ export default function Navbar() {
         </Link>
 
         <div className="relative group">
-          <button className="flex items-center gap-1 text-[#851717] font-medium">
+          <button className="flex items-center gap-1 text-secondary font-medium">
             <MenuIcon fontSize="small" />
             Categories
           </button>
@@ -65,12 +65,12 @@ export default function Navbar() {
       <SearchBar />
 
       {/* Right: Icons */}
-      <div className="flex items-center gap-4 text-[#851717] relative">
+      <div className="flex items-center gap-4 text-secondary relative">
         {/* Cart */}
         <Link href="/cart" className="relative">
           <ShoppingCartIcon fontSize="medium" className="cursor-pointer" />
           {isMounted && typeof cartCount === "number" && cartCount > 0 && (
-            <span className="absolute -top-2 -right-2 text-xs bg-white text-[#851717] rounded-full px-1.5 py-0.5 font-bold">
+            <span className="absolute -top-2 -right-2 text-xs bg-white text-secondary rounded-full px-1.5 py-0.5 font-bold">
               {cartCount}
             </span>
           )}
@@ -81,7 +81,7 @@ export default function Navbar() {
 
         {/* Seller Portal */}
         <Link href="/seller">
-          <button className="bg-transparent text-[#851717] px-4 py-1.5 rounded-full text-sm hover:underline">
+          <button className="bg-transparent text-secondary px-4 py-1.5 rounded-full text-sm hover:underline">
             Seller Portal
           </button>
         </Link>
@@ -124,7 +124,7 @@ export default function Navbar() {
           </div>
         ) : (
           <Link href="/login">
-            <button className="bg-[#851717] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#6c1212] transition">
+            <button className="bg-secondary text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#6c1212] transition">
               Sign In
             </button>
           </Link>

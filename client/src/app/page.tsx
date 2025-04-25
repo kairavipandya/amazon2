@@ -1,56 +1,62 @@
-import Navbar from "../components/NavBar";
-import SearchBar from "../components/SearchBar";
+"use client";
+import Navbar from "@/components/NavBar";
+import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
+import Link from "next/link";
 
 const categories = [
-  { name: "Women’s Clothing", img: "/womenclothing.svg" },
-  { name: "Men’s Clothing", img: "/menclothing.svg" },
-  { name: "Electronics", img: "/electronics.svg" },
-  { name: "Home Decor", img: "/decor.svg" },
+  { name: "clothing", img: "/womenclothing.svg" },
+  { name: "books", img: "/images.jpeg" },
+  { name: "electronics", img: "/electronics.svg" },
+  { name: "homeAndKitchen", img: "/decor.svg" },
 ];
 
 export default function HomePage() {
   return (
-    <div className="bg-[#F2EAE0] min-h-screen font-sans text-[#111]">
+    <div className="bg-primary min-h-screen font-sans text-[#111]">
       <Navbar />
 
-      <main className="px-6 py-10 max-w-7xl mx-auto">
+      <main className="px-6 py-12 max-w-7xl mx-auto">
         {/* Hero Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative bg-[#E9A8B3] rounded-2xl overflow-hidden shadow-md min-h-[200px] flex items-end p-6">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="relative bg-secondary/90 rounded-2xl overflow-hidden shadow-lg min-h-[250px] flex items-end p-8">
             <Image
               src="/eastereggs.svg"
               alt="Easter Eggs"
               fill
-              className="object-cover opacity-30"
+              className="object-cover opacity-20"
             />
-            <div className="relative z-10 text-white">
-              <h2 className="text-2xl font-bold">Shop for EASTER</h2>
-              <p className="text-sm">Decorations, Eggs, Baskets, Chocolate</p>
+            <div className="relative z-10 text-white space-y-2">
+              <h2 className="text-3xl font-bold">Shop for EASTER</h2>
+              <p className="text-md">Decorations, Eggs, Baskets, Chocolate</p>
             </div>
           </div>
 
-          <div className="relative rounded-2xl overflow-hidden shadow-md h-[200px]">
+          <div className="relative bg-[#A5C9CA] rounded-2xl overflow-hidden shadow-lg min-h-[250px] flex items-end p-8">
             <Image
               src="/easterbasket.svg"
               alt="Easter Basket"
               fill
-              className="object-cover"
+              className="object-cover opacity-20"
             />
-            <div className="absolute bottom-4 left-4 text-white drop-shadow font-medium text-sm">
-              <p className="text-base">Personalized Baskets</p>
-              <p className="text-xs">Shop now</p>
+            <div className="relative z-10 text-white space-y-1">
+              <p className="text-xl font-semibold">Personalized Baskets</p>
+              <p className="text-sm">Shop now for Easter gifts!</p>
             </div>
           </div>
         </section>
 
         {/* Categories */}
-        <section className="mt-10">
-          <h3 className="text-xl font-semibold mb-4">Shop the most popular categories</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section>
+          <h3 className="text-2xl font-semibold mb-6 text-center">Shop the Most Popular Categories</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {categories.map((item, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <div className="relative w-full h-[120px] rounded-xl overflow-hidden shadow-sm">
+              <Link
+                key={i}
+                href={`/category/${item.name}`}
+                className="group flex flex-col items-center p-4 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
                   <Image
                     src={item.img}
                     alt={item.name}
@@ -58,8 +64,8 @@ export default function HomePage() {
                     className="object-cover"
                   />
                 </div>
-                <p className="font-semibold mt-2 text-center">{item.name}</p>
-              </div>
+                <p className="text-md font-semibold capitalize group-hover:text-secondary transition">{item.name.replace(/([A-Z])/g, ' $1')}</p>
+              </Link>
             ))}
           </div>
         </section>

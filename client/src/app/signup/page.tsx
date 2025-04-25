@@ -38,7 +38,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F2EAE0] font-sans px-4">
+    <div className="min-h-screen flex items-center justify-center bg-primary font-sans px-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-black">Create Account</h1>
 
@@ -48,7 +48,7 @@ export default function SignupPage() {
             <input
               type="text"
               placeholder="e.g. johnty25"
-              className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-[#851717] text-black"
+              className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-secondary text-black"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -60,7 +60,7 @@ export default function SignupPage() {
             <input
               type="password"
               placeholder="••••••••"
-              className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-[#851717] text-black"
+              className="w-full border px-4 py-2 rounded-full outline-none focus:ring-2 focus:ring-secondary text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -69,7 +69,7 @@ export default function SignupPage() {
 
           <button
             type="submit"
-            className="mt-6 bg-[#851717] text-white w-full py-2 rounded-full hover:opacity-90 transition"
+            className="mt-6 bg-secondary text-white w-full py-2 rounded-full hover:opacity-90 transition"
           >
             Sign Up
           </button>
