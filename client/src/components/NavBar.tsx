@@ -101,7 +101,7 @@ export default function Navbar() {
                 <li
                   onClick={async () => {
                     try {
-                      await fetch("http://localhost:5000/api/logout", {
+                      await fetch("http://localhost:5050/api/logout", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
